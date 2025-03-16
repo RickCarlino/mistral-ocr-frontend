@@ -14,6 +14,9 @@ COPY . .
 # Generate Prisma client
 RUN bunx prisma generate
 
+# Create uploads directory
+RUN mkdir -p public/uploads
+
 # Expose the port the app will run on
 EXPOSE 3000
 

@@ -10,6 +10,7 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
+      - ./public/uploads:/app/public/uploads
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/doc_processor?schema=public
       - NODE_ENV=development

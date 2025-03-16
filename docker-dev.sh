@@ -5,7 +5,7 @@
 case "$1" in
   start)
     echo "Starting Docker development environment..."
-    docker-compose up -d
+    docker compose up -d --build
     echo "Docker containers started in detached mode."
     echo "App is running at http://localhost:3000"
     echo "PostgreSQL is available at localhost:5432"
@@ -13,36 +13,36 @@ case "$1" in
     ;;
   stop)
     echo "Stopping Docker development environment..."
-    docker-compose down
+    docker compose down
     echo "Docker containers stopped."
     ;;
   restart)
     echo "Restarting Docker development environment..."
-    docker-compose down
-    docker-compose up -d
+    docker compose down
+    docker compose up -d --build
     echo "Docker containers restarted."
     ;;
   logs)
     echo "Showing logs (Ctrl+C to exit)..."
-    docker-compose logs -f
+    docker compose logs -f
     ;;
   build)
     echo "Rebuilding Docker images..."
-    docker-compose build
+    docker compose build
     echo "Docker images rebuilt."
     ;;
   clean)
     echo "Cleaning up Docker environment (will remove database data)..."
-    docker-compose down -v
+    docker compose down -v
     echo "Docker environment cleaned."
     ;;
   shell)
     echo "Opening shell in app container..."
-    docker-compose exec app /bin/sh
+    docker compose exec app /bin/sh
     ;;
   db)
     echo "Opening PostgreSQL CLI..."
-    docker-compose exec db psql -U postgres -d doc_processor
+    docker compose exec db psql -U postgres -d doc_processor
     ;;
   *)
     echo "Usage: $0 {start|stop|restart|logs|build|clean|shell|db}"
