@@ -1,5 +1,6 @@
 .cache/
 .DS_Store
+.dockerignore
 .env
 .env*.local
 .next/
@@ -15,10 +16,12 @@ build
 bun.lockb
 coverage
 dist
+docker-compose.override.yml
 next-env.d.ts
 node_modules
 npm-debug.log*
 out/
+postgres_data
 prisma/.env
 prisma/migrations/dev/
 yarn-debug.log*
