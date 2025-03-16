@@ -19,6 +19,7 @@ model Document {
   title       String
   content     String?
   imagePath   String?
+  ocrResult   String?  @db.Text
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

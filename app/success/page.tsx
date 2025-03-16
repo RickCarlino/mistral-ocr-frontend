@@ -3,6 +3,31 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import ReactMarkdown from 'react-markdown';
+
+// Function to extract markdown from OCR result
+const extractMarkdownFromOCR = (ocrResult: string) => {
+  try {
+    // Parse the OCR result JSON
+    const parsedResult = JSON.parse(ocrResult);
+    
+    // If the OCR result has a markdown property, return it
+    if (parsedResult.markdown) {
+      return parsedResult.markdown;
+    }
+    
+    // If the OCR result has a text property, return it
+    if (parsedResult.text) {
+      return parsedResult.text;
+    }
+    
+    // Otherwise, return the stringified JSON
+    return `\`\`\`json\n${JSON.stringify(parsedResult, null, 2)}\n\`\`\``;
+  } catch (error) {
+    // If parsing fails, return the raw string
+    return ocrResult;
+  }
+};
 
 export default function SuccessPage() {
   const [document, setDocument] = useState<any>(null);
@@ -95,13 +120,22 @@ export default function SuccessPage() {
         <div className="bg-gray-100 rounded-lg p-4 mb-6">
           <h2 className="font-semibold text-lg mb-2">{document?.title}</h2>
           {document?.imagePath && (
-            <div className="relative w-full h-48 rounded-lg overflow-hidden">
+            <div className="relative w-full h-48 rounded-lg overflow-hidden mb-4">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={document.imagePath}
                 alt={document.title}
                 className="w-full h-full object-cover"
               />
+            </div>
+          )}
+          
+          {document?.ocrResult && (
+            <div className="mt-4 text-left">
+              <h3 className="font-semibold text-md mb-2">OCR Result:</h3>
+              <div className="bg-white p-4 rounded-lg overflow-auto max-h-96">
+                <ReactMarkdown>{extractMarkdownFromOCR(document.ocrResult)}</ReactMarkdown>
+              </div>
             </div>
           )}
         </div>

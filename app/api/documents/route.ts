@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { writeFile } from 'fs/promises';
+import { readFileSync } from 'fs';
 import { join } from 'path';
+import { imageOCR } from '@/lib/mistral';
 
 export async function GET() {
   try {
@@ -54,11 +56,28 @@ export async function POST(request: Request) {
     // Save the file to the uploads directory
     await writeFile(filePath, buffer);
     
+    // Get the absolute URL for the image
+    const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+    const host = request.headers.get('host') || 'localhost:3000';
+    const imageUrl = `${protocol}://${host}/uploads/${fileName}`;
+    
+    // Run OCR on the image
+    let ocrResult = null;
+    try {
+      const ocrResponse = await imageOCR(imageUrl);
+      // Convert the OCR response to a string
+      ocrResult = JSON.stringify(ocrResponse);
+    } catch (ocrError) {
+      console.error('Error running OCR:', ocrError);
+      // Continue even if OCR fails
+    }
+    
     // Create a new document in the database
     const document = await prisma.document.create({
       data: {
         title,
         imagePath: `/uploads/${fileName}`,
+        ocrResult,
       },
     });
     

@@ -14,6 +14,7 @@ services:
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/doc_processor?schema=public
       - NODE_ENV=development
+      - MISTRAL_API_KEY=${MISTRAL_API_KEY}
     depends_on:
       - db
     restart: unless-stopped
