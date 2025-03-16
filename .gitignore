@@ -1,43 +1,25 @@
-# Dependencies
-node_modules
+.cache/
+.DS_Store
+.env
+.env*.local
+.next/
 .pnp
 .pnp.js
-
-# Bun
-bun.lockb
-
-# Testing
-coverage
-
-# Next.js
-.next/
-out/
-build
-dist
-
-# Misc
-.DS_Store
+.pnpm-debug.log*
+.prisma/
+.turbo
+.vercel
 *.pem
-
-# Debug
+*.tsbuildinfo
+build
+bun.lockb
+coverage
+dist
+next-env.d.ts
+node_modules
 npm-debug.log*
+out/
+prisma/.env
+prisma/migrations/dev/
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
-
-# Local env files
-.env*.local
-.env
-
-# Vercel
-.vercel
-
-# TypeScript
-*.tsbuildinfo
-next-env.d.ts
-
-# Turbo
-.turbo
-
-# Cache
-.cache/
