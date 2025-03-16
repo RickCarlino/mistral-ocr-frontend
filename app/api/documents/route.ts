@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { writeFile } from 'fs/promises';
-import { readFileSync } from 'fs';
 import { join } from 'path';
 import { imageOCR } from '@/lib/mistral';
 

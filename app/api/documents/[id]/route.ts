@@ -5,6 +5,8 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  await params;
+
   try {
     const id = params.id;
     
