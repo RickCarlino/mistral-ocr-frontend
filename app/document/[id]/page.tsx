@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { prisma } from '@/lib/prisma';
 
 // Define the props type for the page component
@@ -72,10 +73,10 @@ export default async function DocumentPage({ params }: DocumentPageProps) {
           {document.ocrResult && (
             <div className="px-4 py-5 sm:px-6">
               <h3 className="text-lg font-medium text-gray-900 mb-4">OCR Result</h3>
-              <div className="prose prose-sm sm:prose lg:prose-lg xl:prose-xl max-w-none">
-                <pre>
+              <div className="prose prose-sm sm:prose lg:prose-lg xl:prose-xl max-w-none prose-gray prose-headings:text-gray-900 prose-p:text-gray-800 prose-li:text-gray-800 prose-strong:text-gray-900">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {document.ocrResult}
-                </pre>
+                </ReactMarkdown>
               </div>
             </div>
           )}

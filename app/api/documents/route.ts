@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { writeFile } from "fs/promises";
-import { join } from "path";
 import { imageOCR } from "@/lib/mistral";
 
 export async function GET() {
@@ -41,17 +39,6 @@ export async function POST(request: Request) {
     const timestamp = Date.now();
     const randomStr = Math.random().toString(36).substring(2, 10);
     const fileName = `${timestamp}-${randomStr}.${fileExtension}`;
-    const filePath = join("public", "uploads", fileName);
-
-    // Convert the file to a Buffer
-    const buffer = Buffer.from(await imageFile.arrayBuffer());
-
-    // Save the file to the uploads directory
-    await writeFile(filePath, buffer);
-
-    // Get the absolute URL for the image
-    const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
-    const host = request.headers.get("host") || "localhost:3000";
     const ocrResponse = await imageOCR(imageFile);
 
     // Create a new document in the database
