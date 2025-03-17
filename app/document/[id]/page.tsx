@@ -73,9 +73,9 @@ export default async function DocumentPage({ params }: DocumentPageProps) {
             <div className="px-4 py-5 sm:px-6">
               <h3 className="text-lg font-medium text-gray-900 mb-4">OCR Result</h3>
               <div className="prose prose-sm sm:prose lg:prose-lg xl:prose-xl max-w-none">
-                <ReactMarkdown>
+                <pre>
                   {document.ocrResult}
-                </ReactMarkdown>
+                </pre>
               </div>
             </div>
           )}

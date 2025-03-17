@@ -27,3 +27,4 @@ prisma/migrations/dev/
 yarn-debug.log*
 yarn-error.log*
 public/uploads/
+gcs.json
