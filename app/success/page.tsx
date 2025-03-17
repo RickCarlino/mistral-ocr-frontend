@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 // Function to extract markdown from OCR result
 const extractMarkdownFromOCR = (ocrResult: string) => {
@@ -133,8 +134,25 @@ export default function SuccessPage() {
           {document?.ocrResult && (
             <div className="mt-4 text-left">
               <h3 className="font-semibold text-md mb-2">OCR Result:</h3>
-              <div className="bg-white p-4 rounded-lg overflow-auto max-h-96">
-                <ReactMarkdown>{extractMarkdownFromOCR(document.ocrResult)}</ReactMarkdown>
+              <div className="bg-white p-4 rounded-lg overflow-auto max-h-96 text-black">
+                <ReactMarkdown 
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    p: ({node, ...props}) => <p className="text-black my-2" {...props} />,
+                    li: ({node, ...props}) => <li className="text-black" {...props} />,
+                    h1: ({node, ...props}) => <h1 className="text-black font-bold text-2xl my-4" {...props} />,
+                    h2: ({node, ...props}) => <h2 className="text-black font-bold text-xl my-3" {...props} />,
+                    h3: ({node, ...props}) => <h3 className="text-black font-bold text-lg my-2" {...props} />,
+                    a: ({node, ...props}) => <a className="text-blue-600 underline" {...props} />,
+                    table: ({node, ...props}) => <table className="border-collapse border border-gray-400 my-4" {...props} />,
+                    th: ({node, ...props}) => <th className="border border-gray-400 px-4 py-2 text-black bg-gray-200" {...props} />,
+                    td: ({node, ...props}) => <td className="border border-gray-400 px-4 py-2 text-black" {...props} />,
+                    code: ({node, ...props}) => <code className="bg-gray-100 text-black px-1 rounded" {...props} />,
+                    pre: ({node, ...props}) => <pre className="bg-gray-100 text-black p-4 rounded my-4 overflow-x-auto" {...props} />
+                  }}
+                >
+                  {extractMarkdownFromOCR(document.ocrResult)}
+                </ReactMarkdown>
               </div>
             </div>
           )}

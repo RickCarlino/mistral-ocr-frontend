@@ -28,10 +28,10 @@ async function uploadFileToS3(file: File) {
 export async function imageOCR(file: File) {
   return await minstral.ocr.process({
     model: "mistral-ocr-latest",
+    includeImageBase64: false,
     document: {
       type: "image_url",
       imageUrl: await uploadFileToS3(file),
     },
-    includeImageBase64: true,
   });
 }

@@ -73,8 +73,23 @@ export default async function DocumentPage({ params }: DocumentPageProps) {
           {document.ocrResult && (
             <div className="px-4 py-5 sm:px-6">
               <h3 className="text-lg font-medium text-gray-900 mb-4">OCR Result</h3>
-              <div className="prose prose-sm sm:prose lg:prose-lg xl:prose-xl max-w-none prose-gray prose-headings:text-gray-900 prose-p:text-gray-800 prose-li:text-gray-800 prose-strong:text-gray-900">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              <div className="text-black prose prose-sm sm:prose lg:prose-lg xl:prose-xl max-w-none">
+                <ReactMarkdown 
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    p: ({node, ...props}) => <p className="text-black my-2" {...props} />,
+                    li: ({node, ...props}) => <li className="text-black" {...props} />,
+                    h1: ({node, ...props}) => <h1 className="text-black font-bold text-2xl my-4" {...props} />,
+                    h2: ({node, ...props}) => <h2 className="text-black font-bold text-xl my-3" {...props} />,
+                    h3: ({node, ...props}) => <h3 className="text-black font-bold text-lg my-2" {...props} />,
+                    a: ({node, ...props}) => <a className="text-blue-600 underline" {...props} />,
+                    table: ({node, ...props}) => <table className="border-collapse border border-gray-400 my-4" {...props} />,
+                    th: ({node, ...props}) => <th className="border border-gray-400 px-4 py-2 text-black bg-gray-200" {...props} />,
+                    td: ({node, ...props}) => <td className="border border-gray-400 px-4 py-2 text-black" {...props} />,
+                    code: ({node, ...props}) => <code className="bg-gray-100 text-black px-1 rounded" {...props} />,
+                    pre: ({node, ...props}) => <pre className="bg-gray-100 text-black p-4 rounded my-4 overflow-x-auto" {...props} />
+                  }}
+                >
                   {document.ocrResult}
                 </ReactMarkdown>
               </div>
